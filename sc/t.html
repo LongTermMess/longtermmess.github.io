@@ -175,7 +175,7 @@
                 if(beta < 85){gamma = 0 - gamma;}
 
                 //console.log(alpha + ', ' + beta + ', ' + gamma);
-                //document.getElementById("TicketName").innerText = (alpha + '\n' + beta + '\n' + gamma);
+                //document.getElementById("ConfirmationVal").innerText = (alpha + '\n' + beta + '\n' + gamma);
 
                 if(beta < 85 || beta > 95)
                 {
@@ -248,6 +248,29 @@
                 document.getElementById("Word_Time").classList.toggle("fade");
             }
 
+            function orientationSetup()
+            {
+                //console.log("Yo Mama")
+
+                if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                    // Handle iOS 13+ devices.
+                    DeviceMotionEvent.requestPermission()
+                    .then((state) => {
+                        if (state === 'granted') {
+                        window.addEventListener('deviceorientation', orientationChanged);
+                        //document.getElementById("TicketName").innerText = 'ACCELEROMETER ACCEPTED';
+                        } else {
+                        document.getElementById("TicketName").innerText = 'ACCELEROMETER REJECTED';
+                        }
+                    })
+                    .catch(console.error);
+                } else {
+                    // Handle regular non iOS 13+ devices.
+                    //document.getElementById("TicketName").innerText = 'NON IPHONE';
+                    window.addEventListener('deviceorientation', orientationChanged, true);
+                }
+
+            }
 
             function myFunction() {
                 console.log("Hello");
@@ -413,7 +436,7 @@
         </div>
         
 
-        <div id = "BG_OV"><img src="overlay.png" onload="myFunction()"></div>
+        <div id = "BG_OV"><img src="overlay.png" onload="myFunction()"  onclick = "orientationSetup()"></div>
        
         
     </body>
