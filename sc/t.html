@@ -1,0 +1,438 @@
+<html>
+    <head>
+        <script src="lottie.js" type="text/javascript"></script>
+        <style>
+            @font-face { font-family: Font; src: url('f1.otf'); } 
+            @font-face { font-family: FontBold; src: url('f2.otf'); } 
+            html *
+            {
+            font-family: Font;
+            white-space: nowrap;
+            
+            
+            }
+            #BG {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+            #BG_OV {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                z-index: 16777271;
+            }
+            #WordBanner {
+                position: absolute;
+                top: 1898px;
+                left: 45px;
+                background-color: powderblue;
+                /*height: 332px; scales animation properly but then goes over other assets*/
+                height: 270px;
+                width: 1380px;
+                transform-origin: center;
+                z-index: 16777260;
+            }
+            #WordBanner_Time {
+                position: absolute;
+                top: 1898px;
+                left: 20px;
+                /*height: 332px; scales animation properly but then goes over other assets*/
+                height: 270px;
+                width: 1430px;
+                transform-origin: center;
+                z-index: 16777260;
+            }
+            #WordBannerAnim {
+                position: absolute;
+                top: 0px;
+                left: 20px;
+                /*height: 332px; scales animation properly but then goes over other assets*/
+                height: 270px;
+                width: 1430px;
+                transform-origin: center;
+                z-index: 16777261;
+            }
+            #Word {
+                position: relative;
+                font-size: 154pt;
+                top: 30px;
+                text-align: center;
+                z-index: 16777262;
+                opacity: 1;
+                transition: opacity 1s; 
+            }
+            #Word_Time {
+                position: relative;
+                font-size: 154pt;
+                top: 30px;
+                text-align: center;
+                z-index: 16777262;
+                opacity: 0;
+                transition: opacity 1s; 
+            }
+            #Word.fade{
+                opacity: 0;
+            }
+            #Word_Time.fade{
+                opacity: 1;
+            }
+            #QRS_1, #QRS_2, #QRS_3, #QRS_4, #QRS_5{
+                position: absolute;
+                top: 594px;
+                left: 336px;
+            }
+            #TicketNameHolder {
+                position: absolute;
+                top: 1470px;
+                left: 0px;
+                width: 1470px;
+            }
+            #TicketName {
+                position: relative;
+                font-size: 76pt;
+                text-align: center;
+                color: #061B2C;
+                font-family: FontBold;
+            }
+
+            #TicketAge {
+                position: absolute;
+                top: 1650px;
+                left: 101px;
+                font-size: 56pt;
+                color: #061B2C;
+                font-family: FontBold;
+            }
+            #TicketPrice {
+                position: absolute;
+                top: 1650px;
+                left: 1140px;
+                font-size: 56pt;
+                color: #061B2C;
+                font-family: FontBold;
+            }
+            #ValidationDateHolder {
+                position: absolute;
+                top: 1795px;
+                left: 0px;
+                width: 1470px;
+            }
+            #ValidationDate {
+                position: relative;
+                font-size: 45pt;
+                color: #061B2C;
+                text-align: center;
+                font-family: FontBold;
+            }
+            #ExpiryCountdownHolder {
+                position: absolute;
+                top: 2246px;
+                left: 0px;
+                width: 1470px;
+            }
+            #ExpiryCountdown {
+                position: relative;
+                font-size: 40pt;
+                color: #303030;
+                text-align: center;
+                font-family: FontBold;
+            }
+            #ConfirmationValHolder {
+                position: absolute;
+                top: 2662px;
+                left: 0px;
+                width: 1470px;
+            }
+            #ConfirmationVal {
+                position: relative;
+                top: 0px;
+                left: 0px;
+                font-size: 42pt;
+                color: #303030;
+                text-align: center;
+             
+            }
+            </style>
+
+
+
+        <script>
+
+             
+
+
+            function orientationChanged(event)
+            {
+                var absolute = event.absolute;
+                var alpha = event.alpha;
+                var beta = event.beta;
+                var gamma = event.gamma;
+
+                cap = 45;
+                if(gamma > cap){gamma = cap;}
+                if(gamma < -cap){gamma = -cap;}
+                if(beta < 85){gamma = 0 - gamma;}
+
+                //console.log(alpha + ', ' + beta + ', ' + gamma);
+                //document.getElementById("TicketName").innerText = (alpha + '\n' + beta + '\n' + gamma);
+
+                if(beta < 85 || beta > 95)
+                {
+                    document.getElementById("WordBanner").style.transform = "rotate(" + (gamma/2) + "deg)"
+                    document.getElementById("WordBanner_Time").style.transform = "rotate(" + (gamma/2) + "deg)"
+                }
+            }
+
+            
+            function WordUpate()
+            {
+                date = new Date(Date.now());
+                document.getElementById("Word_Time").innerText = (date.getHours().toString().padStart(2, "0") + ":" +  date.getMinutes().toString().padStart(2, "0"));
+
+                //document.getElementById("Word_Time").style.opacity = Math.sin(Date.now() / 1200 + 30);
+                //document.getElementById("Word").style.opacity = 0 - Math.sin(Date.now() / 1200 + 30); 
+
+                months = [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ];
+                validationDate = new Date(Date.now());//Could reused date but if we wanna use a past date we might wanna change this
+                document.getElementById("ValidationDate").innerText = "Valid from: 00:00, " + validationDate.getDate().toString().padStart(2, "0") + " " + months[validationDate.getMonth()] + " " + validationDate.getFullYear();
+
+                expDate = new Date(Date.now()); 
+                expDate.setDate(expDate.getDate() + 1);//Set date to tommorow
+                expDate.setHours(3); expDate.setMinutes(0); expDate.setSeconds(0);
+
+                timeRemaining = new Date(expDate - date);
+                remainingHours = timeRemaining.getHours().toString().padStart(2, "0");
+                remainingMins = timeRemaining.getMinutes().toString().padStart(2, "0");
+                remainingSecs = timeRemaining.getSeconds().toString().padStart(2, "0");
+
+                document.getElementById("ExpiryCountdown").innerText = "Ticket expires in: " + remainingHours + "h: " + remainingMins + "m: " + remainingSecs + "s";
+                //<div id = "ValidationDate">00:00, 01 Jan 2025</div>
+                //<div id = "ExpiryCountdown">19h: 47m: 48s</div>
+
+            }
+
+            QRID = 1;
+            function QRUpdate()
+            {
+                if(QRID > 5){QRID = 1;}
+        
+                for(i = 1; i <= 5; i++)
+                {
+                  
+                    if(i == QRID){ alpha = 1;}
+                    else{alpha = 0;}
+
+                    document.getElementById("QRS_" + i).style.opacity = alpha;
+                }
+ 
+                QRID++;
+            }
+
+            function FadeWords()
+            {
+                document.getElementById("Word").classList.toggle("fade");
+                document.getElementById("Word_Time").classList.toggle("fade");
+            }
+
+
+            function myFunction() {
+                console.log("Hello");
+                
+                
+                //Read json to get todays color/word
+                date = new Date(Date.now());
+                dayNum = (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+                
+
+                json = JSON.parse(atob(words.split('').reverse().join('')));
+
+                document.getElementById("Word").innerText = json[dayNum - 1].word;
+                ColorID = json[dayNum - 1].colour;
+                switch(ColorID)
+                {
+                    default:
+                        Color = "#2dbad7";
+                        break;
+                    case "Blue":
+                        Color = "#2dbad7";
+                        break;
+                    case "Green":
+                        Color = "#44cf8c";
+                        break;
+                    case "Grey":
+                        Color = "#8b9498";
+                        break;
+                    case "Orange":
+                        Color = "#f9a03d";
+                        break;
+                    case "Pink":
+                        Color = "#e9427d";
+                        break;
+                }
+                document.getElementById("WordBanner").style.backgroundColor = Color;
+                  
+
+                
+
+
+                if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                    // Handle iOS 13+ devices.
+                    DeviceMotionEvent.requestPermission()
+                    .then((state) => {
+                        if (state === 'granted') {
+                        window.addEventListener('deviceorientation', orientationChanged);
+                        //document.getElementById("TicketName").innerText = 'ACCELEROMETER ACCEPTED';
+                        } else {
+                        document.getElementById("TicketName").innerText = 'ACCELEROMETER REJECTED';
+                        }
+                    })
+                    .catch(console.error);
+                } else {
+                    // Handle regular non iOS 13+ devices.
+                    //document.getElementById("TicketName").innerText = 'NON IPHONE';
+                    window.addEventListener('deviceorientation', orientationChanged, true);
+                }
+
+
+                TicketName = "East Scotland DayRider";
+                TicketAge = "Adult";
+                TicketPrice = "£11.50";
+                TicketCode = "9255";
+
+                //dbg
+                //TicketName = "West Fife DayRider";
+                //TicketPrice = "£8.50";
+
+                document.getElementById("TicketName").innerText = TicketName;
+                document.getElementById("TicketAge").innerText = TicketAge;
+                document.getElementById("TicketPrice").innerText = TicketPrice;
+
+                year = date.getFullYear().toString();
+                month = (date.getMonth() + 1).toString().padStart(2, "0");
+                day = date.getDate().toString().padStart(2, "0");
+                extranum = "";
+                for(i = 0; i < 9; i++){extranum += Math.floor(Math.random() * 10);}
+                extraletters = "";
+                for(i = 0; i < 5; i++)
+                {
+                    randomChoice = Math.floor(Math.random() * 4);
+                    if(randomChoice == 0)
+                    {
+                        extraletters += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                    }
+                    else if(randomChoice == 1)
+                    {
+                        extraletters += String.fromCharCode(97 + Math.floor(Math.random() * 26));
+                    }
+                    else if(randomChoice == 2 || randomChoice == 3)
+                    {
+                        extraletters += Math.floor(Math.random() * 10);
+                    }
+                }
+                
+
+                document.getElementById("ConfirmationVal").innerText = TicketCode + "-" + year + month + day + extranum + "-" + extraletters;
+
+
+
+                lottie.loadAnimation(
+                    {
+                    container: document.getElementById("WordBanner"), // the dom element that will contain the animation
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    animationData: JSON.parse(localAnimJSON),
+                    rendererSettings: {
+                        //preserveAspectRatio: 'xMinYMin slice', // Supports the same options as the svg element's preserveAspectRatio property
+                        id: 'WordBannerAnim',
+                    }
+                    }
+                );
+                
+                setInterval(WordUpate, 10);
+                setInterval(QRUpdate, 10000);
+                setInterval(FadeWords, 2000);
+
+            }
+
+            function Test()
+            {
+
+            }
+
+
+        </script>
+    </head>
+
+    <body>
+
+        <div id = "BG"><img src="final.png"></div>
+        <div id = "QRS_1"><img src="qrs/QR1.png"></div>
+        <div id = "QRS_2"><img src="qrs/QR2.png"></div>
+        <div id = "QRS_3"><img src="qrs/QR3.png"></div>
+        <div id = "QRS_4"><img src="qrs/QR4.png"></div>
+        <div id = "QRS_5"><img src="qrs/QR5.png"></div>
+
+        <div id = "TicketNameHolder">
+            <div id = "TicketName">[PH]TICKETNAME</div>
+        </div>
+
+        <div id = "WordBanner">
+            <div id = "Word">[PH]WORD</div>
+        </div> 
+        <div id = "WordBanner_Time">
+            <div id = "Word_Time">[PH]TIME</div>
+        </div> 
+
+        <div id = "TicketAge">[PH]Age</div>
+        <div id = "TicketPrice">£0.00</div>
+
+        <div id = "ValidationDateHolder">
+            <div id = "ValidationDate">00:00, 01 Jan 2025</div>
+        </div>
+        <div id = "ExpiryCountdownHolder">
+            <div id = "ExpiryCountdown">00h: 00m: 00s</div>
+        </div>
+
+        <div id = "ConfirmationValHolder">
+            <div id = "ConfirmationVal">1234-20250101000000000-Ab3D5</div>
+        </div>
+        
+
+        <div id = "BG_OV"><img src="overlay.png" onload="myFunction()"></div>
+       
+        
+    </body>
+
+
+
+
+
+
+    <script>
+
+        words = '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gojI5FGZikALikncvx2RiAiOiQmcvdnIJwiI5VmcHJCI6Iic19GbvNmIJsHL9FTMxAiOikXYkJSCsICZ19mcQJCI6ICZy92dikALismbpBlIgojIyV3bs92Yikwes0HMxEDI6ISehRmIJwiIyV3bQJCI6ICZy92dikALikXZydkIgojIyV3bs92Yikwes0XOwEDI6ISehRmIJwiI5JHduVkIgojIkJ3b3JSCsIiblVmcHJCI6Iic19GbvNmIJsHL9hDMxAiOikXYkJSCsISZjlmcQJCI6ICZy92dikALikXZydkIgojIyV3bs92Yikwes03NwEDI6ISehRmIJwiIhR3b1FlIgojIkJ3b3JSCsIyaulGUiAiOiIXdvx2bjJSC7xSf2ATMgojI5FGZikALi02bvJnQiAiOiQmcvdnIJwiIuVWZydkIgojIyV3bs92Yikwes0XNwEDI6ISehRmIJwiIsFGdl1kIgojIkJ3b3JSCsISZ1xmQiAiOiIXdvx2bjJSC7xSf0ATMgojI5FGZikALiIXYkFmUiAiOiQmcvdnIJwiI5VmcHJCI6Iic19GbvNmIJsHL9NDMxAiOikXYkJSCsIyYpdWYNJCI6ICZy92dikALismbpBlIgojIyV3bs92Yikwes0nMwEDI6ISehRmIJwiIoNGdhdlIgojIkJ3b3JSCsISZ1xmQiAiOiIXdvx2bjJSC7xSfxATMgojI5FGZikALiwWYvh2UiAiOiQmcvdnIJwiIr5WaQJCI6Iic19GbvNmIJsHL9BDMxAiOikXYkJSCsICa0V3bNJCI6ICZy92dikALiUWdsJkIgojIyV3bs92Yikwes0XO5AiOikXYkJSCsICdh9GbGJCI6ICZy92dikALismbpBlIgojIyV3bs92Yikwes0HO5AiOikXYkJSCsICdlVmcHJCI6ICZy92dikALiUWdsJkIgojIyV3bs92Yikwes03N5AiOikXYkJSCsICblR3bIJCI6ICZy92dikALi4WZlJ3RiAiOiIXdvx2bjJSC7xSf2kDI6ISehRmIJwiIyVmdvhkIgojIkJ3b3JSCsIyaulGUiAiOiIXdvx2bjJSC7xSf1kDI6ISehRmIJwiI05WahBlIgojIkJ3b3JSCsISZn5WYy9kIgojIyV3bs92Yikwes0HN5AiOikXYkJSCsICc192UiAiOiQmc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vdnIJwiI5VmcHJCI6Iic19GbvNmIJsHL9ZTNgojI5FGZikALigGdu9WTiAiOiQmcvdnIJwiIlVHbCJCI6Iic19GbvNmIJsHL9VTNgojI5FGZikALi0WYlR3UiAiOiQmcvdnIJwiIr5WaQJCI6Iic19GbvNmIJsHL9RTNgojI5FGZikALiU2cy92RiAiOiQmcvdnIJwiIuVWZydkIgojIyV3bs92Yikwes03M1AiOikXYkJSCsICclVGbTJCI6ICZy92dikALismbpBlIgojIyV3bs92Yikwes0nM1AiOikXYkJSCsIiclRXYXJCI6ICZy92dikALiU2ZuFmcPJCI6Iic19GbvNmIJsHL9FTNgojI5FGZikALiwWZ2VGTiAiOiQmcvdnIJwiIuVWZydkIgojIyV3bs92Yikwes0HM1AiOikXYkJSCsISevpmbFJCI6ICZy92dikALiU2ZuFmcPJCI6Iic19GbvNmIJsHL9lDNgojI5FGZikALiQGbpVnQiAiOiQmcvdnIJwiIlVHbCJCI6Iic19GbvNmIJsHL9hDNgojI5FGZikALis2Yv52SiAiOiQmcvdnIJwiIuVWZydkIgojIyV3bs92Yikwes03N0AiOikXYkJSCsICdjFGeFJCI6ICZy92dikALikXZydkIgojIyV3bs92Yikwes0nN0AiOikXYkJSCsISesxWZKJCI6ICZy92dikALiUWdsJkIgojIyV3bs92Yikwes0XN0AiOikXYkJSCsICduV2ZBJCI6ICZy92dikALiU2ZuFmcPJCI6Iic19GbvNmIJsHL9RDNgojI5FGZikALiQWahJnQiAiOiQmcvdnIJwiIuVWZydkIgojIyV3bs92Yikwes03M0AiOikXYkJSCsICd19GaTJCI6ICZy92dikALiU2ZuFmcPJCI6Iic19GbvNmIJsHL9JDNgojI5FGZikALiUGZpx2RiAiOiQmcvdnIJwiI5VmcHJCI6Iic19GbvNmIJsHL9FDNgojI5FGZikALiUGdpxWRiAiOiQmcvdnIJwiIlVHbCJCI6Iic19GbvNmIJsHL9BDNgojI5FGZikALiUmcvNkIgojIkJ3b3JSCsIyaulGUiAiOiIXdvx2bjJSC7xSf5MDI6ISehRmIJwiIyVGZpJlIgojIkJ3b3JSCsISZ1xmQiAiOiIXdvx2bjJSC7xSf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'
+       localAnimJSON = '{"v":"5.1.1","fr":60,"ip":0,"op":599,"w":1300,"h":312,"nm":"Bubbles_iPhoneX 2","ddd":0,"assets":[],"layers":[{"ddd":0,"ind":1,"ty":3,"nm":"Null 1","sr":1,"ks":{"o":{"a":0,"k":0,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":0,"k":[650,12,0],"ix":2},"a":{"a":0,"k":[50,50,0],"ix":1},"s":{"a":0,"k":[177,177,100],"ix":6}},"ao":0,"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":2,"ty":4,"nm":"Shape Layer 2","parent":1,"sr":1,"ks":{"o":{"a":0,"k":70,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[109.457,26.457,0],"e":[189.457,4.457,0],"to":[13.3333330154419,-3.66666674613953,0],"ti":[-2.83333325386047,-5.16666650772095,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":143,"s":[189.457,4.457,0],"e":[126.457,57.457,0],"to":[2.83333325386047,5.16666650772095,0],"ti":[-3.83333325386047,-28.1666660308838,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":256,"s":[126.457,57.457,0],"e":[212.457,173.457,0],"to":[3.83333325386047,28.1666660308838,0],"ti":[-37.1666679382324,0.16666667163372,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":384,"s":[212.457,173.457,0],"e":[109.457,26.457,0],"to":[24.6738204956055,-0.11064493656158,0],"ti":[17.1666660308838,24.5,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[24.487,24.487,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":3,"ty":4,"nm":"Shape Layer 1","parent":1,"sr":1,"ks":{"o":{"a":0,"k":40,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.667,"y":1},"o":{"x":0.333,"y":0},"n":"0p667_1_0p333_0","t":0,"s":[348.457,120.457,0],"e":[343.457,181.457,0],"to":[-0.83333331346512,10.1666669845581,0],"ti":[14.5,-14.1666669845581,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"n":"0p667_1_0p167_0","t":120,"s":[343.457,181.457,0],"e":[261.457,205.457,0],"to":[-14.5,14.1666669845581,0],"ti":[6,-8.83333301544189,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"n":"0p667_1_0p167_0","t":226,"s":[261.457,205.457,0],"e":[307.457,234.457,0],"to":[-6,8.83333301544189,0],"ti":[-7.5,7.16666650772095,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"n":"0p667_1_0p167_0","t":311,"s":[307.457,234.457,0],"e":[306.457,162.457,0],"to":[7.5,-7.16666650772095,0],"ti":[-11.3333330154419,12.3333330154419,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"n":"0p667_1_0p167_0","t":378,"s":[306.457,162.457,0],"e":[375.457,160.457,0],"to":[11.3333330154419,-12.3333330154419,0],"ti":[-7,7,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0},"n":"0p667_1_0p167_0","t":472,"s":[375.457,160.457,0],"e":[348.457,120.457,0],"to":[7,-7,0],"ti":[4.5,6.66666650772095,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[87.415,87.415,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":4,"ty":4,"nm":"Shape Layer 3","parent":1,"sr":1,"ks":{"o":{"a":0,"k":40,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[448.395,231.627,0],"e":[1.119,-8.941,0],"to":[-323.389617919922,-70.3995971679688,0],"ti":[35.4774017333984,34.3169441223145,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[37.073,37.073,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":5,"ty":4,"nm":"Shape Layer 4","parent":1,"sr":1,"ks":{"o":{"a":0,"k":55,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[151.457,161.457,0],"e":[213.457,105.457,0],"to":[10.3333330154419,-9.33333301544189,0],"ti":[-12.6666669845581,23.6666660308838,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":120,"s":[213.457,105.457,0],"e":[227.457,19.457,0],"to":[12.6666669845581,-23.6666660308838,0],"ti":[24.8333339691162,8.66666698455811,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":252,"s":[227.457,19.457,0],"e":[64.457,53.457,0],"to":[-24.8333339691162,-8.66666698455811,0],"ti":[19.3603630065918,-18.5938663482666,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":397,"s":[64.457,53.457,0],"e":[151.457,161.457,0],"to":[-64.6440658569336,62.0847473144531,0],"ti":[-14.5,-18,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[57.21,57.21,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":6,"ty":4,"nm":"Shape Layer 5","parent":1,"sr":1,"ks":{"o":{"a":0,"k":40,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.333,"y":0},"n":"0p833_0p833_0p333_0","t":0,"s":[-14.543,229.457,0],"e":[63.457,205.457,0],"to":[27.3701572418213,-71.3310928344727,0],"ti":[-2.51185035705566,-0.30777612328529,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":134,"s":[63.457,205.457,0],"e":[119.457,163.457,0],"to":[84.3333358764648,10.3333330154419,0],"ti":[0,0,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":214,"s":[119.457,163.457,0],"e":[-52.543,107.457,0],"to":[0,0,0],"ti":[114.666664123535,-50.6666679382324,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0.167},"n":"0p667_1_0p167_0p167","t":386,"s":[-52.543,107.457,0],"e":[-14.543,229.457,0],"to":[-28.6666660308838,-9.33333301544189,0],"ti":[-11.9072265625,20.7791595458984,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[57.21,57.21,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":7,"ty":4,"nm":"Shape Layer 6","parent":1,"sr":1,"ks":{"o":{"a":0,"k":30,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[-280.543,189.457,0],"e":[-226.543,47.457,0],"to":[9,-23.6666660308838,0],"ti":[50,55.3333320617676,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":149,"s":[-226.543,47.457,0],"e":[-276.543,105.457,0],"to":[-22.3481674194336,-24.7319736480713,0],"ti":[0,0,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":281,"s":[-276.543,105.457,0],"e":[-280.543,189.457,0],"to":[0,0,0],"ti":[7.63496732711792,-0.17352198064327,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[130.205,130.205,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":8,"ty":4,"nm":"Shape Layer 7","parent":1,"sr":1,"ks":{"o":{"a":0,"k":60,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.667,"y":0.994},"o":{"x":0.333,"y":0},"n":"0p667_0p994_0p333_0","t":0,"s":[-349.142,-12.622,0],"e":[481.194,135.623,0],"to":[138.953353881836,138.059936523438,0],"ti":[-110.282577514648,5.84050321578979,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[64.761,64.761,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":9,"ty":4,"nm":"Shape Layer 8","parent":1,"sr":1,"ks":{"o":{"a":0,"k":70,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[-206.543,87.457,0],"e":[10.395,181.536,0],"to":[36.156307220459,15.6798496246338,0],"ti":[-151.220336914062,90.8757095336914,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":255,"s":[10.395,181.536,0],"e":[-206.543,87.457,0],"to":[82.5895690917969,-164.376480102539,0],"ti":[36.156307220459,15.6798496246338,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[24.487,24.487,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":10,"ty":4,"nm":"Shape Layer 9","parent":1,"sr":1,"ks":{"o":{"a":0,"k":30,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.592,"y":0.531},"o":{"x":0.333,"y":0},"n":"0p592_0p531_0p333_0","t":0,"s":[-44.543,71.457,0],"e":[142.771,62.43,0],"to":[-8.66666698455811,-75.6666641235352,0],"ti":[4.03029727935791,-20.8161010742188,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.253,"y":0.299},"n":"0p667_1_0p253_0p299","t":308,"s":[142.771,62.43,0],"e":[-44.543,71.457,0],"to":[-30.4442577362061,65.8654861450195,0],"ti":[31.2190551757812,-1.50443685054779,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[100,100,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":11,"ty":4,"nm":"Shape Layer 10","parent":1,"sr":1,"ks":{"o":{"a":0,"k":70,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[293.288,66.937,0],"e":[9.288,62.937,0],"to":[-39.7550506591797,-49.3440551757812,0],"ti":[25.8658447265625,-22.9670867919922,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":269,"s":[9.288,62.937,0],"e":[11.288,194.937,0],"to":[-38.6666679382324,34.3333320617676,0],"ti":[-70.3333358764648,-22,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":423,"s":[11.288,194.937,0],"e":[220.377,187.395,0],"to":[32.0172805786133,10.0148849487305,0],"ti":[-69.8854598999023,34.5177574157715,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":521,"s":[220.377,187.395,0],"e":[293.288,66.937,0],"to":[57.4423522949219,-28.3718719482422,0],"ti":[10.9086360931396,13.5398235321045,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[24.487,24.487,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":12,"ty":4,"nm":"Shape Layer 11","parent":1,"sr":1,"ks":{"o":{"a":0,"k":50,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.333,"y":0},"n":"0p833_0p833_0p333_0","t":0,"s":[145.457,39.457,0],"e":[273.457,63.457,0],"to":[21.3333339691162,4,0],"ti":[-33.3333320617676,-21.6666660308838,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":92,"s":[273.457,63.457,0],"e":[335.457,175.457,0],"to":[33.3333320617676,21.6666660308838,0],"ti":[-1.33333337306976,-0.33333334326744,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":236,"s":[335.457,175.457,0],"e":[259.457,107.457,0],"to":[1.33333337306976,0.33333334326744,0],"ti":[-50.6666679382324,125.333335876465,0]},{"i":{"x":0.667,"y":1},"o":{"x":0.167,"y":0.167},"n":"0p667_1_0p167_0p167","t":397,"s":[259.457,107.457,0],"e":[145.457,39.457,0],"to":[50.6666679382324,-91.3333358764648,0],"ti":[19,11.3333330154419,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[62.244,62.244,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0},{"ddd":0,"ind":13,"ty":4,"nm":"Shape Layer 12","parent":1,"sr":1,"ks":{"o":{"a":0,"k":70,"ix":11},"r":{"a":0,"k":0,"ix":10},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":0,"s":[197.457,57.457,0],"e":[-32.543,25.457,0],"to":[-38.3333320617676,-5.33333349227905,0],"ti":[35,21,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":165,"s":[-32.543,25.457,0],"e":[-94.543,11.457,0],"to":[-35,-21,0],"ti":[1.33333337306976,-1,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":209,"s":[-94.543,11.457,0],"e":[-186.543,233.457,0],"to":[-1.33333337306976,1,0],"ti":[-143.66667175293,-61.3333320617676,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":330,"s":[-186.543,233.457,0],"e":[197.457,57.457,0],"to":[178.418075561523,78.4915237426758,0],"ti":[-7.5,16.8333339691162,0]},{"t":600}],"ix":2},"a":{"a":0,"k":[285.457,45.457,0],"ix":1},"s":{"a":0,"k":[32.039,32.039,100],"ix":6}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[158.914,158.914],"ix":2},"p":{"a":0,"k":[0,0],"ix":3},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse","hd":false},{"ty":"fl","c":{"a":0,"k":[1,1,1,1],"ix":4},"o":{"a":0,"k":100,"ix":5},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill","hd":false},{"ty":"tr","p":{"a":0,"k":[285.457,45.457],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":3,"cix":2,"ix":1,"mn":"ADBE Vector Group","hd":false}],"ip":0,"op":599,"st":0,"bm":0}],"markers":[]}';
+
+
+
+
+
+    </script>
+
+
+</html>
