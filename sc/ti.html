@@ -25,21 +25,21 @@
             }
             #WordBanner {
                 position: absolute;
-                top: 1898px;
+                top: 1698px;
                 left: 45px;
                 background-color: powderblue;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 270px;
+                height: 170px;
                 width: 1380px;
                 transform-origin: center;
                 z-index: 16777260;
             }
             #WordBanner_Time {
                 position: absolute;
-                top: 1898px;
+                top: 1698px;
                 left: 20px;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 270px;
+                height: 170px;
                 width: 1430px;
                 transform-origin: center;
                 z-index: 16777260;
@@ -49,14 +49,14 @@
                 top: 0px;
                 left: 20px;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 270px;
+                height: 170px;
                 width: 1430px;
                 transform-origin: center;
                 z-index: 16777261;
             }
             #Word {
                 position: relative;
-                font-size: 154pt;
+                font-size: 74pt;
                 top: 30px;
                 text-align: center;
                 z-index: 16777262;
@@ -65,7 +65,7 @@
             }
             #Word_Time {
                 position: relative;
-                font-size: 154pt;
+                font-size: 74pt;
                 top: 30px;
                 text-align: center;
                 z-index: 16777262;
@@ -80,8 +80,9 @@
             }
             #QRS_1, #QRS_2, #QRS_3, #QRS_4, #QRS_5{
                 position: absolute;
-                top: 594px;
-                left: 336px;
+                top: 431px;
+                left: 410px;
+       
             }
             #TicketNameHolder {
                 position: absolute;
@@ -159,25 +160,25 @@
     </head>
 
     <body>
-
-        <div id = "BG"><img src="a/final.png"></div>
-        <div id = "QRS_1"><img src="qrs/QR1.png"></div>
-        <div id = "QRS_2"><img src="qrs/QR2.png"></div>
-        <div id = "QRS_3"><img src="qrs/QR3.png"></div>
-        <div id = "QRS_4"><img src="qrs/QR4.png"></div>
-        <div id = "QRS_5"><img src="qrs/QR5.png"></div>
+        <div id = "BG"><img src="i/final.png"></div>
+        
+        <div id = "QRS_1"><img src="qrs/QR1.png" style="width: 643px;"></div>
+        <div id = "QRS_2"><img src="qrs/QR2.png" style="width: 643px;"></div>
+        <div id = "QRS_3"><img src="qrs/QR3.png" style="width: 643px;"></div>
+        <div id = "QRS_4"><img src="qrs/QR4.png" style="width: 643px;"></div>
+        <div id = "QRS_5"><img src="qrs/QR5.png" style="width: 643px;"></div>
 
         <div id = "TicketNameHolder">
             <div id = "TicketName">[PH]TICKETNAME</div>
         </div>
-
+         
         <div id = "WordBanner">
             <div id = "Word">[PH]WORD</div>
         </div> 
         <div id = "WordBanner_Time">
             <div id = "Word_Time">[PH]TIME</div>
         </div> 
-
+        
         <div id = "TicketAge">[PH]Age</div>
         <div id = "TicketPrice">£0.00</div>
 
@@ -193,9 +194,9 @@
         </div>
         
 
-        <div id = "BG_OV"><img src="a/overlay.png" onload="initialisePage()"  onclick = "orientationSetup()"></div>
-       
         
+        <div id = "BG_OV"><img src="i/overlay.png" onload="initialisePage()" onclick = "orientationSetup()"></div>
+       
     </body>
 
 
