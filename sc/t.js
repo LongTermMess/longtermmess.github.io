@@ -111,15 +111,11 @@
 
     }
 
-    function initialisePage() {
+    function initialisePage(Type) {
         console.log("Hello");
         
-        //DEBUG REMEMBER TO FIX BY MAKING FALSE
-        iphone = true;
-
         if (typeof DeviceMotionEvent.requestPermission === 'function') {
             // Handle iOS 13+ devices.
-            iphone = true;
             DeviceMotionEvent.requestPermission()
             .then((state) => {
                 if (state === 'granted') {
@@ -182,10 +178,10 @@
 
         TicketName = "East Scotland DayRider";
         TicketAge = "Adult";
-        TicketPrice = "£11.50";
+        TicketPrice = "£12.20";
         TicketCode = "9255";
 
-        if(iphone)
+        if(Type == "IPhone")
         {
             TicketName = "";
             TicketAge = "";
