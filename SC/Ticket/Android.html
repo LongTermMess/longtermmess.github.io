@@ -1,10 +1,10 @@
 <html>
     <head>
         <script src="lottie.js" type="text/javascript"></script>
-        <script src="t.js" type="text/javascript"></script>
+        <script src="Ticket.js" type="text/javascript"></script>
         <style>
-            @font-face { font-family: Font; src: url('f1.otf'); } 
-            @font-face { font-family: FontBold; src: url('f2.otf'); } 
+            @font-face { font-family: Font; src: url('Font.otf'); } 
+            @font-face { font-family: FontBold; src: url('FontBold.otf'); } 
             html *
             {
             font-family: Font;
@@ -25,21 +25,22 @@
             }
             #WordBanner {
                 position: absolute;
-                top: 1698px;
+                top: 1658px;
                 left: 45px;
                 background-color: powderblue;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 170px;
+                height: 230px;
                 width: 1380px;
                 transform-origin: center;
                 z-index: 16777260;
+                /*filter: drop-shadow(0px 20px 1.5rem);*/   
             }
             #WordBanner_Time {
                 position: absolute;
-                top: 1698px;
+                top: 1658px;
                 left: 20px;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 170px;
+                height: 230px;
                 width: 1430px;
                 transform-origin: center;
                 z-index: 16777260;
@@ -49,15 +50,15 @@
                 top: 0px;
                 left: 20px;
                 /*height: 332px; scales animation properly but then goes over other assets*/
-                height: 170px;
+                height: 230px;
                 width: 1430px;
                 transform-origin: center;
                 z-index: 16777261;
             }
             #Word {
                 position: relative;
-                font-size: 74pt;
-                top: 30px;
+                font-size: 124pt;
+                top: 20px;
                 text-align: center;
                 z-index: 16777262;
                 opacity: 1;
@@ -65,8 +66,8 @@
             }
             #Word_Time {
                 position: relative;
-                font-size: 74pt;
-                top: 30px;
+                font-size: 124pt;
+                top: 20px;
                 text-align: center;
                 z-index: 16777262;
                 opacity: 0;
@@ -80,19 +81,18 @@
             }
             #QRS_1, #QRS_2, #QRS_3, #QRS_4, #QRS_5{
                 position: absolute;
-                top: 431px;
-                left: 410px;
-       
+                top: 494px;
+                left: 336px;
             }
             #TicketNameHolder {
                 position: absolute;
-                top: 1470px;
+                top: 1350px;
                 left: 0px;
                 width: 1470px;
             }
             #TicketName {
                 position: relative;
-                font-size: 76pt;
+                font-size: 66pt;
                 text-align: center;
                 color: #061B2C;
                 font-family: FontBold;
@@ -100,23 +100,23 @@
 
             #TicketAge {
                 position: absolute;
-                top: 1650px;
-                left: 101px;
+                top: 315px;
+                left: 61px;
                 font-size: 56pt;
-                color: #061B2C;
+                color: #ffffff;
                 font-family: FontBold;
             }
             #TicketPrice {
                 position: absolute;
-                top: 1650px;
-                left: 1140px;
+                top: 315px;
+                left: 1050px;
                 font-size: 56pt;
-                color: #061B2C;
+                color: #ffffff;
                 font-family: FontBold;
             }
             #ValidationDateHolder {
                 position: absolute;
-                top: 1795px;
+                top: 1515px;
                 left: 0px;
                 width: 1470px;
             }
@@ -129,7 +129,7 @@
             }
             #ExpiryCountdownHolder {
                 position: absolute;
-                top: 2246px;
+                top: 2046px;
                 left: 0px;
                 width: 1470px;
             }
@@ -142,7 +142,7 @@
             }
             #ConfirmationValHolder {
                 position: absolute;
-                top: 2662px;
+                top: 2292px;
                 left: 0px;
                 width: 1470px;
             }
@@ -150,9 +150,10 @@
                 position: relative;
                 top: 0px;
                 left: 0px;
-                font-size: 42pt;
+                font-size: 37pt;
                 color: #303030;
                 text-align: center;
+                font-weight: 550;
              
             }
             </style>
@@ -160,25 +161,25 @@
     </head>
 
     <body>
-        <div id = "BG"><img src="i/final.png"></div>
-        
-        <div id = "QRS_1"><img src="qrs/QR1.png" style="width: 643px;"></div>
-        <div id = "QRS_2"><img src="qrs/QR2.png" style="width: 643px;"></div>
-        <div id = "QRS_3"><img src="qrs/QR3.png" style="width: 643px;"></div>
-        <div id = "QRS_4"><img src="qrs/QR4.png" style="width: 643px;"></div>
-        <div id = "QRS_5"><img src="qrs/QR5.png" style="width: 643px;"></div>
+
+        <div id = "BG"><img src="Android/bg.png"></div>
+        <div id = "QRS_1"><img src="qrs/QR1.png"></div>
+        <div id = "QRS_2"><img src="qrs/QR2.png"></div>
+        <div id = "QRS_3"><img src="qrs/QR3.png"></div>
+        <div id = "QRS_4"><img src="qrs/QR4.png"></div>
+        <div id = "QRS_5"><img src="qrs/QR5.png"></div>
 
         <div id = "TicketNameHolder">
             <div id = "TicketName">[PH]TICKETNAME</div>
         </div>
-         
-        <div id = "WordBanner">
+
+        <div id = "WordBanner" >
             <div id = "Word">[PH]WORD</div>
         </div> 
         <div id = "WordBanner_Time">
             <div id = "Word_Time">[PH]TIME</div>
         </div> 
-        
+
         <div id = "TicketAge">[PH]Age</div>
         <div id = "TicketPrice">£0.00</div>
 
@@ -194,9 +195,9 @@
         </div>
         
 
-        
-        <div id = "BG_OV"><img src="i/overlay.png" onload="initialisePage('IPhone')" onclick = "orientationSetup()"></div>
+        <div id = "BG_OV"><img src="Android/overlay.png" onload="initialisePage('Android')"  onclick = "orientationSetup()"></div>
        
+        
     </body>
 
 
